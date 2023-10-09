@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCareer Horse Racing</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Autour+One&display=swap');
+
+
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 60px;
+            /* Yazı boyutu büyütüldü */
+            font-family: "Autour One", sans-serif;
+            /* Yazı stili eklendi */
+            color: red;
+            /* Kırmızı renk */
+            text-transform: uppercase;
+            /* Büyük harf */
+        }
+
+        button {
+            font-size: 18px;
+            margin: 20px;
+            padding: 10px 20px;
+            border: 2px solid red;
+            /* Kenarlar hafifçe kıvrık */
+            background-color: transparent;
+            /* Arkaplan şeffaf */
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Üzerine gelindiğinde kırmızı renk */
+        }
+
+        button:hover {
+            background-color: red;
+            /* Üzerine gelindiğinde kırmızı renk */
+            color: white;
+        }
+
+        .raceTrack {
+            background-color: green;
+            position: relative;
+            width: 800px;
+            height: 400px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        .finishLine {
+            background-color: red;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            top: 10px;
+            right: 0;
+            width: 50px;
+        }
+
+        .horse {
+            width: 100px;
+            height: 100px;
+            background-image: url('horse.png');
+            background-size: cover;
+            position: absolute;
+            left: 0;
+        }
+
+        .horse img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .horse:nth-child(1) {
+            top: 50px;
+        }
+
+        .horse:nth-child(2) {
+            top: 200px;
+        }
+
+        .horse:nth-child(3) {
+            top: 350px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ŞİRİNYER HİPODROMU</h1>
+    <button id="startButton">Start Race</button>
+    <div class="raceTrack">
+        <div class="finishLine">Finish</div>
+        <div class="horse" id="horse1"><img src="2.png" alt="Horse 1"></div>
+        <div class="horse" id="horse2"><img src="3.png" alt="Horse 2"></div>
+        <div class="horse" id="horse3"><img src="4.png" alt="Horse 3"></div>
+    </div>
+
+    <script>
+        document.getElementById("startButton").addEventListener("click", startRace);
+
+        function startRace() {
+            const horses = document.querySelectorAll(".horse");
+
+            horses.forEach(function (horse, index) {
+                moveHorse(horse, index);
+            });
+        }
+
+        function moveHorse(horse, index) {
+            const maxDistance = 750; // Yarış pistinin uzunluğu
+            const speed = Math.random() * 5 + 2; // Rastgele bir hız
+
+            function step() {
+                let currentPosition = parseInt(horse.style.left) || 0;
+                currentPosition += speed;
+
+                if (currentPosition >= maxDistance) {
+                    horse.style.left = maxDistance + "px";
+                    if (index === 0) {
+                        // Sadece birinci at kazandığında ekrana kazananı yazdır
+                        alert("At " + (index + 1) + " kazandı!");
+                    }
+                } else {
+                    horse.style.left = currentPosition + "px";
+                    requestAnimationFrame(step);
+                }
+            }
+
+            step();
+        }
+    </script>
+</body>
+
+</html>
